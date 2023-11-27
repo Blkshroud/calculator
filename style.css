@@ -1,0 +1,48 @@
+body{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.calculator{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 350px;
+    background-color:cornflowerblue;
+    gap: 10px 5px;
+    padding: 15px 10px;
+    border-radius: 10px;
+
+}
+button{
+    flex: 1 1 20%;
+    font-size: 40px;
+    background-color: gray;
+    border-radius: 10px;
+}
+/* .equals, .decimal, .zero, .addition{
+    margin-bottom: 20px;
+} */
+.calculator > .backspace, .calculator > .clear{
+    flex: 1 1 40%;
+}
+
+.backspace, .clear, .equals, .addition, .subtraction, .multiplication, .division{
+    background-color: black;
+    color: white;
+}
+
+
+h1{
+    text-align: center;
+}
+#result{
+    font-size: 50px;
+    padding: 2px 28px;
+    text-align: right;
+    flex: 1 1 100%;
+    border: 2px solid black;
+    background-color: gray;
+    border-radius: 10px;
+}
