@@ -8,8 +8,22 @@ let num2Done;
 const result = document.querySelector('#result');
 const decBtn = document.querySelector('.decimal');
 
+function decimal() {
+    if (num1Done === false) {
+        gNum1 += '.';
+        result.textContent = `${gNum1}${gOperator}${gNum2}`;
+        decBtn.removeEventListener('click', decimal);
+    }
+    else {
+        gNum2 += '.';
+        result.textContent = `${gNum1}${gOperator}${gNum2}`;
+        decBtn.removeEventListener('click', decimal);
+    }
+}
+
 function addition(num1, num2) {
     gNum1 = num1 + num2;
+    gNum1 = Math.round((gNum1 + Number.EPSILON) * 100) / 100;
     result.textContent = gNum1;
     gNum2 = '';
     gOperator = '';
@@ -19,6 +33,7 @@ function addition(num1, num2) {
 
 function subtraction(num1, num2) {
     gNum1 = num1 - num2;
+    gNum1 = Math.round((gNum1 + Number.EPSILON) * 100) / 100;
     result.textContent = gNum1;
     gNum2 = '';
     gOperator = '';
@@ -28,6 +43,7 @@ function subtraction(num1, num2) {
 
 function multiplication(num1, num2) {
     gNum1 = num1 * num2;
+    gNum1 = Math.round((gNum1 + Number.EPSILON) * 100) / 100;
     result.textContent = gNum1;
     gNum2 = '';
     gOperator = '';
@@ -37,6 +53,7 @@ function multiplication(num1, num2) {
 
 function division(num1, num2) {
     gNum1 = num1 / num2;
+    gNum1 = Math.round((gNum1 + Number.EPSILON) * 100) / 100;
     result.textContent = gNum1;
     gNum2 = '';
     gOperator = '';
@@ -77,19 +94,6 @@ function numDisplay(entry) {
     else if (entry.currentTarget.value === '=' && gNum2 !== '') {
         num2Done = true;
         operate(+gNum1, gOperator, +gNum2);
-    }
-}
-
-function decimal() {
-    if (num1Done === false) {
-        gNum1 += '.';
-        result.textContent = `${gNum1}${gOperator}${gNum2}`;
-        decBtn.removeEventListener('click', decimal);
-    }
-    else {
-        gNum2 += '.';
-        result.textContent = `${gNum1}${gOperator}${gNum2}`;
-        decBtn.removeEventListener('click', decimal);
     }
 }
 
