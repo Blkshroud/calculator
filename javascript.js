@@ -6,6 +6,7 @@ let gOperator;
 let num1Done;
 let num2Done;
 const result = document.querySelector('#result');
+const decBtn = document.querySelector('.decimal');
 
 function addition(num1, num2) {
     gNum1 = num1 + num2;
@@ -13,6 +14,7 @@ function addition(num1, num2) {
     gNum2 = '';
     gOperator = '';
     num2Done = false;
+    decBtn.addEventListener('click', decimal);
 }
 
 function subtraction(num1, num2) {
@@ -21,6 +23,7 @@ function subtraction(num1, num2) {
     gNum2 = '';
     gOperator = '';
     num2Done = false;
+    decBtn.addEventListener('click', decimal);
 }
 
 function multiplication(num1, num2) {
@@ -29,6 +32,7 @@ function multiplication(num1, num2) {
     gNum2 = '';
     gOperator = '';
     num2Done = false;
+    decBtn.addEventListener('click', decimal);
 }
 
 function division(num1, num2) {
@@ -37,6 +41,7 @@ function division(num1, num2) {
     gNum2 = '';
     gOperator = '';
     num2Done = false;
+    decBtn.addEventListener('click', decimal);
 }
 
 function operate(num1, operator, num2) {
@@ -75,11 +80,25 @@ function numDisplay(entry) {
     }
 }
 
+function decimal() {
+    if (num1Done === false) {
+        gNum1 += '.';
+        result.textContent = `${gNum1}${gOperator}${gNum2}`;
+        decBtn.removeEventListener('click', decimal);
+    }
+    else {
+        gNum2 += '.';
+        result.textContent = `${gNum1}${gOperator}${gNum2}`;
+        decBtn.removeEventListener('click', decimal);
+    }
+}
+
 function operDisplay(entry) {
     if (gNum1 !== '' && gNum2 === '') {
         gOperator = entry.currentTarget.value;
         num1Done = true;
         result.textContent = `${gNum1}${gOperator}${gNum2}`;
+        decBtn.addEventListener('click', decimal);
     }
     else if (num1Done === true && gNum2 !== '' && gOperator !== '') {
         num2Done = true;
@@ -87,15 +106,6 @@ function operDisplay(entry) {
         gOperator = entry.currentTarget.value;
         result.textContent = `${gNum1}${gOperator}${gNum2}`;
     }
-}
-
-function clearDisplay() {
-    gNum1 = '';
-    gNum2 = '';
-    gOperator = '';
-    num1Done = false;
-    num2Done = false;
-    result.textContent = `0${gNum1}${gOperator}${gNum2}`;
 }
 
 function backspace() {
@@ -112,6 +122,17 @@ function backspace() {
         gNum2 = gNum2.slice(0, gNum2.length - 1);
         result.textContent = `${gNum1}${gOperator}${gNum2}`;
     }
+}
+
+function clearDisplay() {
+    gNum1 = '';
+    gNum2 = '';
+    gOperator = '';
+    num1Done = false;
+    num2Done = false;
+    result.textContent = `0${gNum1}${gOperator}${gNum2}`;
+    decBtn.removeEventListener('click', decimal);
+    decBtn.addEventListener('click', decimal);
 }
 
 const numBtn1 = document.querySelector('.one');
@@ -180,9 +201,5 @@ addBtn.value = '+';
 const equalBtn = document.querySelector('.equals');
 equalBtn.addEventListener('click', numDisplay);
 equalBtn.value = '=';
-
-// const decBtn = document.querySelector('.decimal');
-// decBtn.addEventListener('click', display);
-// decBtn.value = '.';
 
 clearDisplay();
