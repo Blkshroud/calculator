@@ -58,7 +58,7 @@ function operate(num1, operator, num2) {
 }
 
 function numDisplay(entry) {
-    if (gNum1 === '0' && gNum2 === '0' && gOperator === '/') {
+    if (gNum2 === '0' && gOperator === '/' && entry.currentTarget.value === '=') {
         result.textContent = ' ಠಿ_ಠ ';
     }
     else if (num1Done === false && entry.currentTarget.value !== '=') {
@@ -76,9 +76,15 @@ function numDisplay(entry) {
 }
 
 function operDisplay(entry) {
-    if (gNum1 !== '') {
+    if (gNum1 !== '' && gNum2 === '') {
         gOperator = entry.currentTarget.value;
         num1Done = true;
+        result.textContent = `${gNum1}${gOperator}${gNum2}`;
+    }
+    else if (num1Done === true && gNum2 !== '' && gOperator !== '') {
+        num2Done = true;
+        operate(+gNum1, gOperator, +gNum2);
+        gOperator = entry.currentTarget.value;
         result.textContent = `${gNum1}${gOperator}${gNum2}`;
     }
 }
