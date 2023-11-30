@@ -58,24 +58,29 @@ function operate(num1, operator, num2) {
 }
 
 function numDisplay(entry) {
-    if (num1Done === false) {
+    if (gNum1 === '0' && gNum2 === '0' && gOperator === '/') {
+        result.textContent = ' ಠಿ_ಠ ';
+    }
+    else if (num1Done === false && entry.currentTarget.value !== '=') {
         gNum1 += entry.currentTarget.value;
         result.textContent = `${gNum1}${gOperator}${gNum2}`;
     }
-    else if (isNaN(entry.currentTarget.value) === false && num1Done === true && num2Done === false) {
+    else if (entry.currentTarget.value !== '=' && num2Done === false && gOperator !== '') {
         gNum2 += entry.currentTarget.value;
         result.textContent = `${gNum1}${gOperator}${gNum2}`;
     }
-    else if (entry.currentTarget.value === '=') {
+    else if (entry.currentTarget.value === '=' && gNum2 !== '') {
         num2Done = true;
         operate(+gNum1, gOperator, +gNum2);
     }
 }
 
 function operDisplay(entry) {
-    gOperator = entry.currentTarget.value;
-    num1Done = true;
-    result.textContent = `${gNum1}${gOperator}${gNum2}`;
+    if (gNum1 !== '') {
+        gOperator = entry.currentTarget.value;
+        num1Done = true;
+        result.textContent = `${gNum1}${gOperator}${gNum2}`;
+    }
 }
 
 function clearDisplay() {
@@ -85,6 +90,22 @@ function clearDisplay() {
     num1Done = false;
     num2Done = false;
     result.textContent = `0${gNum1}${gOperator}${gNum2}`;
+}
+
+function backspace() {
+    if (num1Done === false) {
+        gNum1 = gNum1.slice(0, gNum1.length - 1);
+        result.textContent = `${gNum1}${gOperator}${gNum2}`;
+    }
+    else if (gOperator !== '' && gNum2 === '') {
+        gOperator = '';
+        num1Done = false;
+        result.textContent = `${gNum1}${gOperator}${gNum2}`;
+    }
+    else {
+        gNum2 = gNum2.slice(0, gNum2.length - 1);
+        result.textContent = `${gNum1}${gOperator}${gNum2}`;
+    }
 }
 
 const numBtn1 = document.querySelector('.one');
@@ -127,9 +148,8 @@ const numBtn0 = document.querySelector('.zero');
 numBtn0.addEventListener('click', numDisplay);
 numBtn0.value = 0;
 
-// const backspaceBtn = document.querySelector('.backspace');
-// backspaceBtn.addEventListener('click', display);
-// backspaceBtn.value = 'undo';
+const backspaceBtn = document.querySelector('.backspace');
+backspaceBtn.addEventListener('click', backspace);
 
 const clearBtn = document.querySelector('.clear');
 clearBtn.addEventListener('click', clearDisplay);
